@@ -1,0 +1,17 @@
+[  
+   {  
+      "title":"5 Tips On Working With Technical Debt",
+      "text":"After listening to a recent .Net Rocks show about Technical Debt I thought I'd share some tips I have on working with technical debt. I worry if 'Technical debt' is just a label we put on things so we don't have to think about them. e.g. 'We know this will create technical debt and we can come back to it at some point in the future.' This doesn't require that we do the best to mitigate the consequences of that debt now though.",
+      "author":"Matt Lacey"
+   },
+   {  
+      "title":"One Small Error in Java Code, One Giant Leap for Java Code Quality",
+      "text":"In this series of posts I am covering some of the many ways you can benefit from XpoLog and especially on how to get the most valuable information from your log4j event logs. By running the XpoLog Analytic Search on your log4j data, you can among other things measure your application performance and thread activity, measure code activity with class and method analytics on log4j, build security analysis, and make use of various visualization gadgets for maximum analysis. In this post I will show you how XpoLog can help you find errors in your Java code, which in turn will help you create better quality code. If you want to follow as you read along, you can download our software for free here.",
+      "author":"Ruth Avramovich"
+   },
+   {  
+      "title":"Extending the Stream API to Maps",
+      "text":"One of the bigest features in Java 8 is the ability to stream over collections of objects. By adding the .stream()-method into the Collection interface, every collection in the java language is suddenly expanded with this new ability. Other data structures like the Map-interface, do not implement the method as they are not, strictly speaking, collections. In this article I will show you how Speedment Open Source streams efficiently over standard Java maps, expanding the Stream interface into something called a MapStream! This addition will make it easier to keep your streams concrete and readable even in complex scenarios. Hopefully this will allow you to keep streaming without prematurely collecting the result.",
+      "author":"Emil Forslund"
+   }
+]
