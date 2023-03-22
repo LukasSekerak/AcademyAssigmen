@@ -15,6 +15,9 @@ public interface ArticleDAO {
 	  /** Returns all available {@link Article}s */
 	  List<Article> findAll();
 
+	  /** Returns all available {@link Article}s where author, title or text contains the searched text.*/
+	  List<Article> searchArticle(String string);
+
 	  /** Persists {@link Article} into the DB */
 	  void persist(Article article);
 	}

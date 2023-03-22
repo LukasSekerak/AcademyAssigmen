@@ -15,6 +15,9 @@ public interface ArticleService {
 	  /** Returns all available {@link Article}s */
 	  List<Article> findAll();
 
+	  /** Returns all available {@link Article}s where author, title or text contains the searched text.*/
+	  List<Article> searchArticle(String string);
+
 	  /** Creates new {@link Article} */
 	  void createArticle(Article article);
 
