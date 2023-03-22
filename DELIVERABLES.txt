@@ -1,4 +1,4 @@
-1. Introduce article delete functionality DELETE http://localhost:8080/articles/{articleId} where article with articleId is deleted from database
+//DONE// 1. Introduce article delete functionality DELETE http://localhost:8080/articles/{articleId} where article with articleId is deleted from database
 
 2. Introduce Comments into the system. Every Article can have multiple comments.
    Comment consists of - Author, Text, Created Date. 
@@ -8,15 +8,15 @@
 
    Create API for creating, deleting and reading comments, comments cannot exist without article assigned
 
-3. We need a way to ingest large number of articles at once from a file. 
+//DONE// 3. We need a way to ingest large number of articles at once from a file.
 
    ArticleIngester should load articles_to_ingest.txt file, parse present articles in JSON format and store all of them into the DB.
 
-4. GET http://localhost:8080/articles/search/{searchText} functionality needs to be implemented.
+//DONE// 4. GET http://localhost:8080/articles/search/{searchText} functionality needs to be implemented.
 
    This should return list of all articles where author, title or text contains the searched text.
 
-5. GET http://localhost:8080/authors/stats functionality needs to be implemented.
+//DONE// 5. GET http://localhost:8080/authors/stats functionality needs to be implemented.
 
    This should return list of all article authors with number of articles written by them.
    Use already provided AuthorStats DTO. See AuthorDAO.findAll() for inspiration.

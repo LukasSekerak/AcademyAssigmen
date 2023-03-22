@@ -50,26 +50,8 @@ public class BlogController {
   @RequestMapping(value = "articles/{articleId}", method = RequestMethod.DELETE)
   public void deleteArticle(@PathVariable final Integer articleId) { this.articleService.deleteByID(articleId); }
 
-  @RequestMapping(value = "comments/{commentId}", method = RequestMethod.DELETE)
-  public void deleteComment(@PathVariable final Integer commentId) { this.commentService.deleteByID(commentId); }
-
-  @RequestMapping(value = "articles/{articleId}/comments", method = RequestMethod.GET)
-  public  List<Comment>  getCommentsOfArticle(@PathVariable final Integer articleId) {
-    return this.commentService.findAllByIDOfArticle(articleId);
-  }
-
-    @RequestMapping(value = "articles/search/{searchText}", method = RequestMethod.GET)
-  public List<Article> searchArticle(@PathVariable final String searchText) {
-            return this.articleService.searchArticle(searchText);
-  }
-
-  @RequestMapping(value = "articles/{articleId}/comments", method = RequestMethod.PUT)
-  public void addComment(@RequestBody final Comment comment, @PathVariable final Integer articleId) {
-    Article article = this.articleService.findByID(articleId);
-    article.getComments().add(comment);
-    this.articleService.createArticle(article);
-    this.commentService.createComment(comment);
-  }
+  @RequestMapping(value = "articles/search/{searchText}", method = RequestMethod.GET)
+  public List<Article> searchArticle(@PathVariable final String searchText) { return this.articleService.searchArticle(searchText); }
 
   @RequestMapping(value = "articles", method = RequestMethod.PUT)
   public void addArticle(@RequestBody final Article article) {
@@ -86,5 +68,20 @@ public class BlogController {
   public List<AuthorStats> authorStats() {
 	  return this.authorStatsService.authorsStats();
   }
+
+  // ~~ Comments
+  @RequestMapping(value = "articles/{articleId}/comments", method = RequestMethod.PUT)
+  public void addComment(@RequestBody final Comment comment, @PathVariable final Integer articleId) {
+    Article article = this.articleService.findByID(articleId);
+    article.getComments().add(comment);
+    this.articleService.createArticle(article);
+    this.commentService.createComment(comment);
+  }
+  @RequestMapping(value = "articles/{articleId}/comments", method = RequestMethod.GET)
+  public  List<Comment>  getCommentsOfArticle(@PathVariable final Integer articleId) {
+    return this.commentService.findAllByIDOfArticle(articleId);
+  }
+  @RequestMapping(value = "comments/{commentId}", method = RequestMethod.DELETE)
+  public void deleteComment(@PathVariable final Integer commentId) { this.commentService.deleteByID(commentId); }
 
 }
