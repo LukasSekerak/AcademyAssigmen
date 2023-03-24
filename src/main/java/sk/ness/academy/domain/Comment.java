@@ -31,10 +31,6 @@ public class Comment {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTimestamp;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "article_id", referencedColumnName = "id")
-    private Article article;
-
     public Integer getId() {
         return this.id;
     }
@@ -67,11 +63,4 @@ public class Comment {
         this.createTimestamp = createTimestamp;
     }
 
-    public Article getArticle() {
-        return article;
-    }
-
-    public void setArticle(Article article) {
-        this.article = article;
-    }
 }

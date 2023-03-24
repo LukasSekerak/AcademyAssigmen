@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import sk.ness.academy.dao.ArticleDAO;
 import sk.ness.academy.domain.Article;
+import sk.ness.academy.exception.ResourceNotFoundException;
 
 @Service
 @Transactional
@@ -24,18 +25,29 @@ public class ArticleServiceImpl implements ArticleService {
   private ArticleDAO articleDAO;
 
   @Override
-  public Article findByID(final Integer articleId) {
-	  return this.articleDAO.findByID(articleId);
+  public Article findByID(final Integer articleId) throws NullPointerException, ResourceNotFoundException {
+    if (articleId == null) {
+      throw new NullPointerException("Request param can't be null.");
+    }
+
+    return articleDAO.findByID(articleId).orElseThrow(
+            () -> new ResourceNotFoundException("Article with id: " + Integer.valueOf(articleId) + " doesn't exists."));
   }
+
 
   @Override
   public void deleteByID(Integer articleId) {
-    this.articleDAO.deleteByID(articleId);
+    articleDAO.deleteByID(articleId);
   }
 
   @Override
   public List<Article> findAll() {
-	  return this.articleDAO.findAll();
+    final List<Article> listOfArticles = this.articleDAO.findAll();
+
+    if (listOfArticles == null) {
+      throw new NullPointerException("Articles not exist in database");
+    }
+	  return listOfArticles;
   }
 
   @Override

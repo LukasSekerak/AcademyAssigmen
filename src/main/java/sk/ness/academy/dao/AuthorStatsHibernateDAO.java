@@ -17,7 +17,7 @@ public class AuthorStatsHibernateDAO implements AuthorStatsDAO {
     private SessionFactory sessionFactory;
     @Override
     public List<AuthorStats> authorsStats() {
-        return this.sessionFactory.getCurrentSession().createSQLQuery("select author AS authorName, COUNT (*) AS articleCount FROM articles GROUP BY author")
+        return this.sessionFactory.getCurrentSession().createSQLQuery("SELECT author AS authorName, COUNT (*) AS articleCount FROM articles GROUP BY author")
                 .addScalar("authorName", StringType.INSTANCE)
                 .addScalar("articleCount", IntegerType.INSTANCE)
                 .setResultTransformer(new AliasToBeanResultTransformer(AuthorStats.class)).list();

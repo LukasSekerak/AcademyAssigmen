@@ -28,7 +28,7 @@ SET FILES NIO TRUE
 SET FILES NIO SIZE 256
 SET FILES LOG TRUE
 SET FILES LOG SIZE 50
-SET FILES CHECK 32802
+SET FILES CHECK 38238
 SET DATABASE COLLATION "SQL_TEXT" PAD SPACE
 CREATE USER SA PASSWORD DIGEST 'd41d8cd98f00b204e9800998ecf8427e'
 ALTER USER SA SET LOCAL TRUE
@@ -39,7 +39,7 @@ CREATE MEMORY TABLE PUBLIC.ARTICLES(ID INTEGER NOT NULL PRIMARY KEY,AUTHOR VARCH
 CREATE MEMORY TABLE PUBLIC.COMMENTS(ID INTEGER NOT NULL PRIMARY KEY,AUTHOR VARCHAR(250),CREATE_TIMESTAMP TIMESTAMP,TEXT VARCHAR(2000),ARTICLE_ID INTEGER,CONSTRAINT FKK4IB6SYDE10DALK7R7XDL0M5P FOREIGN KEY(ARTICLE_ID) REFERENCES PUBLIC.ARTICLES(ID))
 ALTER SEQUENCE SYSTEM_LOBS.LOB_ID RESTART WITH 1
 ALTER SEQUENCE PUBLIC.ARTICLE_SEQ RESTART WITH 41
-ALTER SEQUENCE PUBLIC.COMMENTS_SEQ RESTART WITH 70
+ALTER SEQUENCE PUBLIC.COMMENTS_SEQ RESTART WITH 87
 SET DATABASE DEFAULT INITIAL SCHEMA PUBLIC
 GRANT USAGE ON DOMAIN INFORMATION_SCHEMA.CARDINAL_NUMBER TO PUBLIC
 GRANT USAGE ON DOMAIN INFORMATION_SCHEMA.YES_OR_NO TO PUBLIC
@@ -50,9 +50,7 @@ GRANT DBA TO SA
 SET SCHEMA SYSTEM_LOBS
 INSERT INTO BLOCKS VALUES(0,2147483647,0)
 SET SCHEMA PUBLIC
-INSERT INTO ARTICLES VALUES(24,'Luk\u00e1\u0161','2023-03-22 13:27:16.452000','Text\u00edk abcde','Nadpis2')
 INSERT INTO ARTICLES VALUES(25,'Luk\u00e1\u0161','2023-03-22 13:27:17.486000','Text\u00edk abcde','Nadpis2')
 INSERT INTO ARTICLES VALUES(38,'Matt Lacey','2023-03-22 15:51:35.492000','After listening to a recent .Net Rocks show about Technical Debt I thought I''d share some tips I have on working with technical debt. I worry if ''Technical debt'' is just a label we put on things so we don''t have to think about them. e.g. ''We know this will create technical debt and we can come back to it at some point in the future.'' This doesn''t require that we do the best to mitigate the consequences of that debt now though.','5 Tips On Working With Technical Debt')
 INSERT INTO ARTICLES VALUES(39,'Ruth Avramovich','2023-03-22 15:51:35.492000','In this series of posts I am covering some of the many ways you can benefit from XpoLog and especially on how to get the most valuable information from your log4j event logs. By running the XpoLog Analytic Search on your log4j data, you can among other things measure your application performance and thread activity, measure code activity with class and method analytics on log4j, build security analysis, and make use of various visualization gadgets for maximum analysis. In this post I will show you how XpoLog can help you find errors in your Java code, which in turn will help you create better quality code. If you want to follow as you read along, you can download our software for free here.','One Small Error in Java Code, One Giant Leap for Java Code Quality')
 INSERT INTO ARTICLES VALUES(40,'Emil Forslund','2023-03-22 15:51:35.492000','One of the bigest features in Java 8 is the ability to stream over collections of objects. By adding the .stream()-method into the Collection interface, every collection in the java language is suddenly expanded with this new ability. Other data structures like the Map-interface, do not implement the method as they are not, strictly speaking, collections. In this article I will show you how Speedment Open Source streams efficiently over standard Java maps, expanding the Stream interface into something called a MapStream! This addition will make it easier to keep your streams concrete and readable even in complex scenarios. Hopefully this will allow you to keep streaming without prematurely collecting the result.','Extending the Stream API to Maps')
-INSERT INTO COMMENTS VALUES(69,'Matt Lacey','2023-03-22 13:28:03.574000','comment',NULL)

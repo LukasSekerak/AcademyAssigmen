@@ -1,6 +1,7 @@
 package sk.ness.academy.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.Resource;
 import javax.persistence.TypedQuery;
@@ -12,6 +13,7 @@ import org.hibernate.transform.Transformers;
 import org.springframework.stereotype.Repository;
 
 import sk.ness.academy.domain.Article;
+import sk.ness.academy.exception.ResourceNotFoundException;
 
 @Repository
 public class ArticleHibernateDAO implements ArticleDAO {
@@ -20,19 +22,19 @@ public class ArticleHibernateDAO implements ArticleDAO {
   private SessionFactory sessionFactory;
 
   @Override
-  public Article findByID(final Integer articleId) {
-    return (Article) this.sessionFactory.getCurrentSession().get(Article.class, articleId);
+  public Optional<Article> findByID(final Integer articleId) {
+
+    return Optional.ofNullable((Article) this.sessionFactory.getCurrentSession().get(Article.class, articleId));
   }
 
   @Override
-  public void deleteByID(Integer articleId) {
-    Article article = (Article)this.sessionFactory.getCurrentSession().load(Article.class, articleId);
-    this.sessionFactory.getCurrentSession().delete(article);
-  }
+  public void deleteByID(Integer articleId) throws ResourceNotFoundException, NullPointerException {
+      Article article = (Article)this.sessionFactory.getCurrentSession().load(Article.class, articleId);
+      this.sessionFactory.getCurrentSession().delete(article);
+   }
 
-  @SuppressWarnings("unchecked")
-  @Override
-  public List<Article> findAll() {
+   @Override
+  public List<Article> findAll() throws NullPointerException {
     //return this.sessionFactory.getCurrentSession().createSQLQuery("select * from articles").addEntity(Article.class).list();
     return this.sessionFactory.getCurrentSession().createCriteria(Article.class)
             .setProjection(Projections.projectionList()

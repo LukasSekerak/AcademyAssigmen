@@ -6,6 +6,9 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,20 +41,29 @@ public class BlogController {
 
   // ~~ Article
   @RequestMapping(value = "articles", method = RequestMethod.GET)
-  public List<Article> getAllArticles() {
-	  return this.articleService.findAll();
+  public ResponseEntity<List<Article>> getAllArticles() {
+
+    return  new ResponseEntity<>(this.articleService.findAll(), HttpStatus.OK);
   }
 
   @RequestMapping(value = "articles/{articleId}", method = RequestMethod.GET)
-  public Article getArticle(@PathVariable final Integer articleId) {
-	  return this.articleService.findByID(articleId);
+  public ResponseEntity<Article> getArticle(@PathVariable final Integer articleId) {
+	  Article article = this.articleService.findByID(articleId);
+      //.orElseThrow(() -> new ResourceNotFoundException("Not found Tutorial with id = " + articleId));
+
+    return new ResponseEntity<>(article, HttpStatus.OK);
   }
 
   @RequestMapping(value = "articles/{articleId}", method = RequestMethod.DELETE)
-  public void deleteArticle(@PathVariable final Integer articleId) { this.articleService.deleteByID(articleId); }
+  public  ResponseEntity<HttpStatus> deleteArticle(@PathVariable final Integer articleId) {
+    this.articleService.deleteByID(articleId);
+    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+  }
 
   @RequestMapping(value = "articles/search/{searchText}", method = RequestMethod.GET)
-  public List<Article> searchArticle(@PathVariable final String searchText) { return this.articleService.searchArticle(searchText); }
+  public ResponseEntity<List<Article>> searchArticle(@PathVariable final String searchText) {
+    return  new ResponseEntity<>(this.articleService.searchArticle(searchText), HttpStatus.OK);
+  }
 
   @RequestMapping(value = "articles", method = RequestMethod.PUT)
   public void addArticle(@RequestBody final Article article) {
@@ -70,14 +82,14 @@ public class BlogController {
   }
 
   // ~~ Comments
+  @Transactional
   @RequestMapping(value = "articles/{articleId}/comments", method = RequestMethod.PUT)
   public void addComment(@RequestBody final Comment comment, @PathVariable final Integer articleId) {
     Article article = this.articleService.findByID(articleId);
     article.getComments().add(comment);
     this.articleService.createArticle(article);
-    this.commentService.createComment(comment);
   }
-  @RequestMapping(value = "articles/{articleId}/comments", method = RequestMethod.GET)
+    @RequestMapping(value = "articles/{articleId}/comments", method = RequestMethod.GET)
   public  List<Comment>  getCommentsOfArticle(@PathVariable final Integer articleId) {
     return this.commentService.findAllByIDOfArticle(articleId);
   }

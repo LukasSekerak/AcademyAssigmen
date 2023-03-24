@@ -30,8 +30,10 @@ public class Article {
   @Temporal(TemporalType.TIMESTAMP)
   private Date createTimestamp;
 
-  @OneToMany(mappedBy = "article", cascade = CascadeType.ALL , fetch = FetchType.EAGER)
-  private List<Comment> comments = new ArrayList<>();
+
+  @OneToMany(targetEntity=sk.ness.academy.domain.Comment.class, cascade= CascadeType.ALL, fetch = FetchType.EAGER)
+  @JoinColumn(name="ARTICLE_ID")
+  private Set<Comment> comments = new HashSet<>();
 
   public Integer getId() {
     return this.id;
@@ -73,11 +75,11 @@ public class Article {
     this.createTimestamp = createTimestamp;
   }
 
-  public List<Comment> getComments() {
+  public Set<Comment> getComments() {
     return comments;
   }
 
-  public void setComments(List<Comment> comments) {
+  public void setComments(Set<Comment> comments) {
     this.comments = comments;
   }
 }

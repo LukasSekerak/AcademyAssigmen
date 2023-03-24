@@ -1,6 +1,6 @@
 //DONE// 1. Introduce article delete functionality DELETE http://localhost:8080/articles/{articleId} where article with articleId is deleted from database
 
-2. Introduce Comments into the system. Every Article can have multiple comments.
+//DONE 2. Introduce Comments into the system. Every Article can have multiple comments.
    Comment consists of - Author, Text, Created Date. 
 
    List of all articles (GET http://localhost:8080/articles) should NOT include comments.
