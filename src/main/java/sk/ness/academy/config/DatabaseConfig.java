@@ -1,5 +1,6 @@
 package sk.ness.academy.config;
 
+import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 import org.hibernate.SessionFactory;
@@ -12,7 +13,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 public class DatabaseConfig {
 
-  @Bean(name = "sessionFactory")
+  @Bean(name = "entityManagerFactory")
   public LocalSessionFactoryBean sessionFactory() {
     final org.hibernate.cfg.Configuration configuration = new org.hibernate.cfg.Configuration()
     .setProperty("hibernate.dialect", "org.hibernate.dialect.HSQLDialect")

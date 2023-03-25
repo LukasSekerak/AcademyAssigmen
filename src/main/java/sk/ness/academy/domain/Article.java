@@ -30,7 +30,6 @@ public class Article {
   @Temporal(TemporalType.TIMESTAMP)
   private Date createTimestamp;
 
-
   @OneToMany(targetEntity=sk.ness.academy.domain.Comment.class, cascade= CascadeType.ALL, fetch = FetchType.EAGER)
   @JoinColumn(name="ARTICLE_ID")
   private Set<Comment> comments = new HashSet<>();

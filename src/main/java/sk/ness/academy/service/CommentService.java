@@ -14,9 +14,6 @@ public interface CommentService {
     void createComment(Comment comment);
 
     /** Returns all available {@link Comment}s of {@link Article} */
-    List<Comment> findAllByIDOfArticle(Integer idArticle);
-
-    /** Creates new {@link Comment}s by ingesting all articles from json */
-    void ingestArticles(String jsonComments);
+    List<Comment> findAllCommentsByArticleId(Integer idArticle);
 
 }

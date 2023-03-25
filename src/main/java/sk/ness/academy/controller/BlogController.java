@@ -1,7 +1,5 @@
 package sk.ness.academy.controller;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import sk.ness.academy.projections.ArticlesWithoutComments;
 import sk.ness.academy.domain.Article;
 import sk.ness.academy.domain.Comment;
 import sk.ness.academy.dto.Author;
@@ -41,7 +40,7 @@ public class BlogController {
 
   // ~~ Article
   @RequestMapping(value = "articles", method = RequestMethod.GET)
-  public ResponseEntity<List<Article>> getAllArticles() {
+  public ResponseEntity<List<ArticlesWithoutComments>> getAllArticles() {
 
     return  new ResponseEntity<>(this.articleService.findAll(), HttpStatus.OK);
   }
@@ -49,7 +48,6 @@ public class BlogController {
   @RequestMapping(value = "articles/{articleId}", method = RequestMethod.GET)
   public ResponseEntity<Article> getArticle(@PathVariable final Integer articleId) {
 	  Article article = this.articleService.findByID(articleId);
-      //.orElseThrow(() -> new ResourceNotFoundException("Not found Tutorial with id = " + articleId));
 
     return new ResponseEntity<>(article, HttpStatus.OK);
   }
@@ -89,9 +87,9 @@ public class BlogController {
     article.getComments().add(comment);
     this.articleService.createArticle(article);
   }
-    @RequestMapping(value = "articles/{articleId}/comments", method = RequestMethod.GET)
+  @RequestMapping(value = "articles/{articleId}/comments", method = RequestMethod.GET)
   public  List<Comment>  getCommentsOfArticle(@PathVariable final Integer articleId) {
-    return this.commentService.findAllByIDOfArticle(articleId);
+    return this.commentService.findAllCommentsByArticleId(articleId);
   }
   @RequestMapping(value = "comments/{commentId}", method = RequestMethod.DELETE)
   public void deleteComment(@PathVariable final Integer commentId) { this.commentService.deleteByID(commentId); }

@@ -1,5 +1,6 @@
 package sk.ness.academy;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +24,7 @@ public class ArticleIngester {
   public static void main(final String[] args) {
     try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(ArticleIngester.class)) {
       context.registerShutdownHook();
+
 
       final ArticleService articleService = context.getBean(ArticleService.class);
 

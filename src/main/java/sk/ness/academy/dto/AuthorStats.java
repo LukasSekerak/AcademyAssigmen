@@ -3,9 +3,14 @@ package sk.ness.academy.dto;
 public class AuthorStats {
 
 	  private String authorName;
-	  private Integer articleCount;
+	  private Long articleCount;
 
-	  public String getAuthorName() {
+	public AuthorStats(String authorName, Long articleCount) {
+		this.authorName = authorName;
+		this.articleCount = articleCount;
+	}
+
+	public String getAuthorName() {
 	    return this.authorName;
 	  }
 
@@ -13,11 +18,11 @@ public class AuthorStats {
 	    this.authorName = authorName;
 	  }
 
-	  public Integer getArticleCount() {
+	  public Long getArticleCount() {
 	    return this.articleCount;
 	  }
 
-	  public void setArticleCount(final Integer articleCount) {
+	  public void setArticleCount(final Long articleCount) {
 	    this.articleCount = articleCount;
 	  }
 
