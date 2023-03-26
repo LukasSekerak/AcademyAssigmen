@@ -30,7 +30,7 @@ public class ArticleIngester {
       try {
         String s = new String(Files.readAllBytes(Paths.get("articles_to_ingest.txt")));
         articleService.ingestArticles(s);
-        System.out.print("Articles imported succesfully! \n \n");
+        System.out.print("\n ** Articles imported succesfully! ** \n \n");
       } catch (Exception e) {
 
       }
