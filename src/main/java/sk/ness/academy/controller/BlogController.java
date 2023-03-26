@@ -47,14 +47,13 @@ public class BlogController {
 
   @RequestMapping(value = "articles/{articleId}", method = RequestMethod.GET)
   public ResponseEntity<Article> getArticle(@PathVariable final Integer articleId) {
-	  Article article = this.articleService.findByID(articleId);
-
+	  Article article = this.articleService.findById(articleId);
     return new ResponseEntity<>(article, HttpStatus.OK);
   }
 
   @RequestMapping(value = "articles/{articleId}", method = RequestMethod.DELETE)
   public  ResponseEntity<HttpStatus> deleteArticle(@PathVariable final Integer articleId) {
-    this.articleService.deleteByID(articleId);
+    this.articleService.deleteById(articleId);
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 
@@ -64,34 +63,41 @@ public class BlogController {
   }
 
   @RequestMapping(value = "articles", method = RequestMethod.PUT)
-  public void addArticle(@RequestBody final Article article) {
+  public ResponseEntity<HttpStatus> addArticle(@RequestBody final Article article) {
 	  this.articleService.createArticle(article);
+      return new ResponseEntity<>(HttpStatus.OK);
   }
 
   // ~~ Author
   @RequestMapping(value = "authors", method = RequestMethod.GET)
-  public List<Author> getAllAuthors() {
-	  return this.authorService.findAll();
+  public ResponseEntity<List<Author>> getAllAuthors() {
+    return new ResponseEntity<>(this.authorService.findAll(), HttpStatus.OK);
   }
 
   @RequestMapping(value = "authors/stats", method = RequestMethod.GET)
-  public List<AuthorStats> authorStats() {
-	  return this.authorStatsService.authorsStats();
+  public ResponseEntity<List<AuthorStats>> authorStats() {
+    return new ResponseEntity<>(this.authorStatsService.authorsStats(), HttpStatus.OK);
   }
 
   // ~~ Comments
+  @RequestMapping(value = "articles/{articleId}/comments", method = RequestMethod.GET)
+  public  ResponseEntity<List<Comment>>  getCommentsOfArticle(@PathVariable final Integer articleId) {
+    return new ResponseEntity<>(this.commentService.findAllCommentsByArticleId(articleId), HttpStatus.OK);
+  }
+
+  @RequestMapping(value = "comments/{commentId}", method = RequestMethod.DELETE)
+  public ResponseEntity<HttpStatus> deleteComment(@PathVariable final Integer commentId) {
+    this.commentService.deleteById(commentId);
+    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+  }
+
   @Transactional
   @RequestMapping(value = "articles/{articleId}/comments", method = RequestMethod.PUT)
-  public void addComment(@RequestBody final Comment comment, @PathVariable final Integer articleId) {
-    Article article = this.articleService.findByID(articleId);
+  public ResponseEntity<HttpStatus> addComment(@RequestBody final Comment comment, @PathVariable final Integer articleId) {
+    Article article = this.articleService.findById(articleId);
     article.getComments().add(comment);
     this.articleService.createArticle(article);
+    return new ResponseEntity<>(HttpStatus.OK);
   }
-  @RequestMapping(value = "articles/{articleId}/comments", method = RequestMethod.GET)
-  public  List<Comment>  getCommentsOfArticle(@PathVariable final Integer articleId) {
-    return this.commentService.findAllCommentsByArticleId(articleId);
-  }
-  @RequestMapping(value = "comments/{commentId}", method = RequestMethod.DELETE)
-  public void deleteComment(@PathVariable final Integer commentId) { this.commentService.deleteByID(commentId); }
 
 }

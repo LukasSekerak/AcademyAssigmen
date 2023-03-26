@@ -2,8 +2,10 @@ package sk.ness.academy.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sk.ness.academy.dao.ArticleRepository;
 import sk.ness.academy.dao.CommentRepository;
 import sk.ness.academy.domain.Comment;
+import sk.ness.academy.exception.ResourceNotFoundException;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -15,15 +17,34 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private CommentRepository commentRepository;
 
+    @Autowired
+    private ArticleRepository articleRepository;
+
     @Override
-    public void deleteByID(Integer commentId) {
-        this.commentRepository.deleteByid(commentId);
+    public void deleteById(Integer commentId) {
+        if (commentId == null) {
+            throw new NullPointerException("Request param can't be null.");
+        }
+
+        if (commentRepository.existsById(commentId)) {
+            this.commentRepository.deleteByid(commentId);
+        } else {
+            throw new ResourceNotFoundException("Comment with id: " + Integer.valueOf(commentId) + " doesn't exists.");
+        }
     }
 
     @Override
-    public void createComment(Comment comment) { this.commentRepository.save(comment); }
+    public List<Comment> findAllCommentsByArticleId(Integer idArticle) {
+        if (idArticle == null) {
+            throw new NullPointerException("Request param can't be null.");
+        }
 
-    @Override
-    public List<Comment> findAllCommentsByArticleId(Integer idArticle) { return this.commentRepository.findAllByArticleId(idArticle); }
+        if (articleRepository.existsById(idArticle)) {
+            return this.commentRepository.findAllByArticleId(idArticle);
+        } else {
+            throw new ResourceNotFoundException("Article with id: " + Integer.valueOf(idArticle) + " doesn't exists.");
+        }
+
+    }
 
 }

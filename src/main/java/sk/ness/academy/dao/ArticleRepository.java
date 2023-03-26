@@ -12,20 +12,20 @@ import java.util.Optional;
 
 public interface ArticleRepository extends JpaRepository<Article, Integer> {
 
- Article save(Article entity);
+  Article save(Article entity);
 
- Optional<Article> findById(Integer primaryKey);
+  Optional<Article> findById(Integer primaryKey);
 
- List<ArticlesWithoutComments> findAllProjecteBy();
+  List<ArticlesWithoutComments> findAllProjectedBy();
 
- List<Article> findByTextContainingOrTitleContainingOrAuthorContaining(String s1, String s2, String s3);
- void deleteByid(Integer primaryKey);
+  List<Article> findByTextContainingOrTitleContainingOrAuthorContaining(String s1, String s2, String s3);
+  void deleteByid(Integer primaryKey);
 
- @Query("select distinct new sk.ness.academy.dto.Author(u.author) from Article u")
- List<Author> findAllAuthors();
+  @Query("select distinct new sk.ness.academy.dto.Author(u.author) from Article u")
+  List<Author> findAllAuthors();
 
- @Query("select new sk.ness.academy.dto.AuthorStats(u.author, COUNT(*)) from Article as u GROUP BY u.author")
- List<AuthorStats> authorsStats();
+  @Query("select new sk.ness.academy.dto.AuthorStats(u.author, COUNT(*)) from Article as u GROUP BY u.author")
+  List<AuthorStats> authorsStats();
 
 }
 

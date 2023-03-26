@@ -2,7 +2,6 @@ package sk.ness.academy.service;
 
 import java.util.List;
 
-import javax.annotation.Resource;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;

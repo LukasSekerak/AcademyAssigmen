@@ -21,7 +21,7 @@ public class ArticleServiceImpl implements ArticleService {
   private ArticleRepository articleRepository;
 
   @Override
-  public Article findByID(final Integer articleId) throws NullPointerException, ResourceNotFoundException {
+  public Article findById(final Integer articleId) throws NullPointerException, ResourceNotFoundException {
     if (articleId == null) {
       throw new NullPointerException("Request param can't be null.");
     }
@@ -32,16 +32,25 @@ public class ArticleServiceImpl implements ArticleService {
 
 
   @Override
-  public void deleteByID(Integer articleId) {
-    articleRepository.deleteByid(articleId);
+  public void deleteById(Integer articleId) {
+    if (articleId == null) {
+      throw new NullPointerException("Request param can't be null.");
+    }
+
+    if (articleRepository.existsById(articleId)) {
+      articleRepository.deleteByid(articleId);
+    } else {
+      throw new ResourceNotFoundException("Article with id: " + Integer.valueOf(articleId) + " doesn't exists.");
+    }
+
   }
 
   @Override
   public List<ArticlesWithoutComments> findAll() {
-    final List<ArticlesWithoutComments> listOfArticles = this.articleRepository.findAllProjecteBy();
+    final List<ArticlesWithoutComments> listOfArticles = this.articleRepository.findAllProjectedBy();
 
     if (listOfArticles == null) {
-      throw new NullPointerException("Articles not exist in database");
+      throw new NullPointerException("No articles exist in database.");
     }
 	  return listOfArticles;
   }
@@ -51,7 +60,7 @@ public class ArticleServiceImpl implements ArticleService {
 
   @Override
   public void createArticle(final Article article) {
-	  this.articleRepository.save(article);
+    this.articleRepository.save(article);
   }
 
   @Override

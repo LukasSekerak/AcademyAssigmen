@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import sk.ness.academy.dao.ArticleRepository;
 import sk.ness.academy.dto.AuthorStats;
 
-import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import java.util.List;
 
