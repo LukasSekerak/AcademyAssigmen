@@ -42,15 +42,12 @@ public class BlogController {
   // ~~ Article
   @RequestMapping(value = "articles", method = RequestMethod.GET)
   public ResponseEntity<List<Article>> getAllArticles() {
-
     return  new ResponseEntity<>(this.articleService.findAll(), HttpStatus.OK);
   }
 
   @RequestMapping(value = "articles/{articleId}", method = RequestMethod.GET)
   public ResponseEntity<Article> getArticle(@PathVariable final Integer articleId) {
-	  Article article = this.articleService.findByID(articleId);
-      //.orElseThrow(() -> new ResourceNotFoundException("Not found Tutorial with id = " + articleId));
-
+    Article article = this.articleService.findByID(articleId);
     return new ResponseEntity<>(article, HttpStatus.OK);
   }
 
@@ -62,38 +59,51 @@ public class BlogController {
 
   @RequestMapping(value = "articles/search/{searchText}", method = RequestMethod.GET)
   public ResponseEntity<List<Article>> searchArticle(@PathVariable final String searchText) {
-    return  new ResponseEntity<>(this.articleService.searchArticle(searchText), HttpStatus.OK);
+    return new ResponseEntity<>(this.articleService.searchArticle(searchText), HttpStatus.OK);
   }
 
   @RequestMapping(value = "articles", method = RequestMethod.PUT)
-  public void addArticle(@RequestBody final Article article) {
-	  this.articleService.createArticle(article);
+  public ResponseEntity<HttpStatus> addArticle(@RequestBody final Article article) {
+    this.articleService.createArticle(article);
+    return new ResponseEntity<>(HttpStatus.OK);
+  }
+
+  // ~~ Comments
+  @RequestMapping(value = "comments/{commentId}", method = RequestMethod.GET)
+  public ResponseEntity<Comment> getComment(@PathVariable final Integer commentId) {
+    Comment comment = this.commentService.findByID(commentId);
+    return new ResponseEntity<>(comment, HttpStatus.OK);
+  }
+
+  @Transactional
+  @RequestMapping(value = "articles/{articleId}/comments", method = RequestMethod.PUT)
+  public ResponseEntity<HttpStatus> addComment(@RequestBody final Comment comment, @PathVariable final Integer articleId) {
+    Article article = this.articleService.findByID(articleId);
+    article.getComments().add(comment);
+    this.articleService.createArticle(article);
+    return new ResponseEntity<>(HttpStatus.OK);
+  }
+
+  @RequestMapping(value = "articles/{articleId}/comments", method = RequestMethod.GET)
+  public  ResponseEntity<List<Comment>>  getCommentsOfArticle(@PathVariable final Integer articleId) {
+    return new ResponseEntity<>(this.commentService.findAllByIDOfArticle(articleId),HttpStatus.OK);
+  }
+
+  @RequestMapping(value = "comments/{commentId}", method = RequestMethod.DELETE)
+  public ResponseEntity<HttpStatus> deleteComment(@PathVariable final Integer commentId) {
+    this.commentService.deleteByID(commentId);
+    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 
   // ~~ Author
   @RequestMapping(value = "authors", method = RequestMethod.GET)
-  public List<Author> getAllAuthors() {
-	  return this.authorService.findAll();
+  public ResponseEntity<List<Author>> getAllAuthors() {
+    return new ResponseEntity<>(this.authorService.findAll(),HttpStatus.OK);
   }
 
   @RequestMapping(value = "authors/stats", method = RequestMethod.GET)
-  public List<AuthorStats> authorStats() {
-	  return this.authorStatsService.authorsStats();
+  public ResponseEntity<List<AuthorStats>> authorStats() {
+    return new ResponseEntity<>(this.authorStatsService.authorsStats(),HttpStatus.OK);
   }
-
-  // ~~ Comments
-  @Transactional
-  @RequestMapping(value = "articles/{articleId}/comments", method = RequestMethod.PUT)
-  public void addComment(@RequestBody final Comment comment, @PathVariable final Integer articleId) {
-    Article article = this.articleService.findByID(articleId);
-    article.getComments().add(comment);
-    this.articleService.createArticle(article);
-  }
-    @RequestMapping(value = "articles/{articleId}/comments", method = RequestMethod.GET)
-  public  List<Comment>  getCommentsOfArticle(@PathVariable final Integer articleId) {
-    return this.commentService.findAllByIDOfArticle(articleId);
-  }
-  @RequestMapping(value = "comments/{commentId}", method = RequestMethod.DELETE)
-  public void deleteComment(@PathVariable final Integer commentId) { this.commentService.deleteByID(commentId); }
 
 }

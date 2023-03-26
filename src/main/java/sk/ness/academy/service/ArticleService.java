@@ -11,7 +11,7 @@ public interface ArticleService {
 	  Article findByID(Integer articleId) throws ResourceNotFoundException, NullPointerException;
 
 	  /** Delete {@link Article} with provided ID */
-	  void deleteByID(Integer articleId);
+	  void deleteByID(Integer articleId) throws ResourceNotFoundException, NullPointerException;
 
 	  /** Returns all available {@link Article}s */
 	  List<Article> findAll() throws NullPointerException;

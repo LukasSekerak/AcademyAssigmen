@@ -5,6 +5,7 @@ import sk.ness.academy.dao.ArticleDAO;
 import sk.ness.academy.dao.CommentDAO;
 import sk.ness.academy.domain.Article;
 import sk.ness.academy.domain.Comment;
+import sk.ness.academy.exception.ResourceNotFoundException;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
@@ -16,6 +17,16 @@ public class CommentServiceImpl implements CommentService {
 
     @Resource
     private CommentDAO commentDAO;
+
+    @Override
+    public Comment findByID(Integer commentId) throws ResourceNotFoundException, NullPointerException {
+        if (commentId == null) {
+            throw new NullPointerException("Request param can't be null.");
+        }
+
+        return commentDAO.findByID(commentId).orElseThrow(
+                () -> new ResourceNotFoundException("Comment with id: " + Integer.valueOf(commentId) + " doesn't exists."));
+    }
 
     @Override
     public void deleteByID(Integer commentId) {

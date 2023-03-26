@@ -37,6 +37,13 @@ public class ArticleServiceImpl implements ArticleService {
 
   @Override
   public void deleteByID(Integer articleId) {
+    if (articleId == null) {
+      throw new NullPointerException("Request param can't be null.");
+    }
+
+    Article article = articleDAO.findByID(articleId).orElseThrow(
+            () -> new ResourceNotFoundException("Article with id: " + Integer.valueOf(articleId) + " doesn't exists."));
+
     articleDAO.deleteByID(articleId);
   }
 
@@ -45,7 +52,7 @@ public class ArticleServiceImpl implements ArticleService {
     final List<Article> listOfArticles = this.articleDAO.findAll();
 
     if (listOfArticles == null) {
-      throw new NullPointerException("Articles not exist in database");
+      throw new NullPointerException("Articles doesn't exist in database");
     }
 	  return listOfArticles;
   }

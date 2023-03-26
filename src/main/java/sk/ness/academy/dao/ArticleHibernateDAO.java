@@ -23,7 +23,6 @@ public class ArticleHibernateDAO implements ArticleDAO {
 
   @Override
   public Optional<Article> findByID(final Integer articleId) {
-
     return Optional.ofNullable((Article) this.sessionFactory.getCurrentSession().get(Article.class, articleId));
   }
 
