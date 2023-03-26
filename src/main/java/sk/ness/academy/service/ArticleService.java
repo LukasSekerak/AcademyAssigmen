@@ -2,10 +2,10 @@ package sk.ness.academy.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
 import sk.ness.academy.projections.ArticlesWithoutComments;
 import sk.ness.academy.domain.Article;
 import sk.ness.academy.exception.ResourceNotFoundException;
-
 
 public interface ArticleService {
 

@@ -6,14 +6,15 @@ import javax.sql.DataSource;
 import org.hibernate.SessionFactory;
 import org.hsqldb.jdbc.JDBCDriver;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
-
+@EnableJpaRepositories(basePackages = "sk.ness.academy.dao", entityManagerFactoryRef = "sessionFactory")
 public class DatabaseConfig {
 
-  @Bean(name = "entityManagerFactory")
+  @Bean(name = "sessionFactory")
   public LocalSessionFactoryBean sessionFactory() {
     final org.hibernate.cfg.Configuration configuration = new org.hibernate.cfg.Configuration()
     .setProperty("hibernate.dialect", "org.hibernate.dialect.HSQLDialect")
@@ -35,8 +36,6 @@ public class DatabaseConfig {
   public DataSource dataSource() {
     return new SimpleDriverDataSource(new JDBCDriver(), "jdbc:hsqldb:file:mydb;shutdown=true", "sa", "");
   }
-
-  @Bean
 
   @Bean(name = "transactionManager")
   public PlatformTransactionManager transactionManager(final SessionFactory sessionFactory) {
