@@ -41,7 +41,6 @@ public class BlogController {
   // ~~ Article
   @RequestMapping(value = "articles", method = RequestMethod.GET)
   public ResponseEntity<List<ArticlesWithoutComments>> getAllArticles() {
-
     return  new ResponseEntity<>(this.articleService.findAll(), HttpStatus.OK);
   }
 
@@ -80,6 +79,12 @@ public class BlogController {
   }
 
   // ~~ Comments
+  @RequestMapping(value = "comments/{commentId}", method = RequestMethod.GET)
+  public ResponseEntity<Comment> getComment(@PathVariable final Integer commentId) {
+    Comment comment = this.commentService.findById(commentId);
+    return new ResponseEntity<>(comment, HttpStatus.OK);
+  }
+
   @RequestMapping(value = "articles/{articleId}/comments", method = RequestMethod.GET)
   public  ResponseEntity<List<Comment>>  getCommentsOfArticle(@PathVariable final Integer articleId) {
     return new ResponseEntity<>(this.commentService.findAllCommentsByArticleId(articleId), HttpStatus.OK);

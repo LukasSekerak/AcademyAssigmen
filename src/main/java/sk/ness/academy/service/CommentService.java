@@ -9,6 +9,9 @@ import java.util.List;
 public interface CommentService {
 
     /** Returns {@link Comment} with provided ID */
+    Comment findById(Integer commentId) throws ResourceNotFoundException, NullPointerException;
+
+    /** Returns {@link Comment} with provided ID */
     void deleteById(Integer commentId) throws ResourceNotFoundException, NullPointerException;
 
     /** Returns all available {@link Comment}s of {@link Article} */

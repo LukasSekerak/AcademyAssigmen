@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sk.ness.academy.dao.ArticleRepository;
 import sk.ness.academy.dao.CommentRepository;
+import sk.ness.academy.domain.Article;
 import sk.ness.academy.domain.Comment;
 import sk.ness.academy.exception.ResourceNotFoundException;
 
@@ -19,6 +20,16 @@ public class CommentServiceImpl implements CommentService {
 
     @Autowired
     private ArticleRepository articleRepository;
+
+    @Override
+    public Comment findById(Integer commentId) throws ResourceNotFoundException, NullPointerException {
+        if (commentId == null) {
+            throw new NullPointerException("Request param can't be null.");
+        }
+
+        return commentRepository.findById(commentId).orElseThrow(
+                () -> new ResourceNotFoundException("Comment with id: " + Integer.valueOf(commentId) + " doesn't exists."));
+    }
 
     @Override
     public void deleteById(Integer commentId) {
