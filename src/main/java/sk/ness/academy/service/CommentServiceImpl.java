@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sk.ness.academy.dao.ArticleRepository;
 import sk.ness.academy.dao.CommentRepository;
-import sk.ness.academy.domain.Article;
 import sk.ness.academy.domain.Comment;
 import sk.ness.academy.exception.ResourceNotFoundException;
 

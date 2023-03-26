@@ -6,6 +6,7 @@ import javax.transaction.Transactional;
 
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import sk.ness.academy.dao.ArticleRepository;
@@ -19,6 +20,7 @@ public class ArticleServiceImpl implements ArticleService {
 
   @Autowired
   private ArticleRepository articleRepository;
+
 
   @Override
   public Article findById(final Integer articleId) throws NullPointerException, ResourceNotFoundException {

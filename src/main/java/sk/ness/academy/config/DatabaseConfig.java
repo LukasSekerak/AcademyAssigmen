@@ -36,6 +36,8 @@ public class DatabaseConfig {
     return new SimpleDriverDataSource(new JDBCDriver(), "jdbc:hsqldb:file:mydb;shutdown=true", "sa", "");
   }
 
+  @Bean
+
   @Bean(name = "transactionManager")
   public PlatformTransactionManager transactionManager(final SessionFactory sessionFactory) {
     return new HibernateTransactionManager(sessionFactory);

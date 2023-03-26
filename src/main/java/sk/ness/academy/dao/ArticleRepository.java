@@ -2,6 +2,7 @@ package sk.ness.academy.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 import sk.ness.academy.domain.Article;
 import sk.ness.academy.dto.Author;
 import sk.ness.academy.dto.AuthorStats;
@@ -10,6 +11,7 @@ import sk.ness.academy.projections.ArticlesWithoutComments;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public interface ArticleRepository extends JpaRepository<Article, Integer> {
 
   Article save(Article entity);

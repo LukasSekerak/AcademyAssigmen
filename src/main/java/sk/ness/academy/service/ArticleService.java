@@ -6,6 +6,7 @@ import sk.ness.academy.projections.ArticlesWithoutComments;
 import sk.ness.academy.domain.Article;
 import sk.ness.academy.exception.ResourceNotFoundException;
 
+
 public interface ArticleService {
 
 	  /** Returns {@link Article} with provided ID */
