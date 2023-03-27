@@ -1,6 +1,5 @@
 package sk.ness.academy.service;
 
-import org.springframework.stereotype.Service;
 import sk.ness.academy.domain.Article;
 import sk.ness.academy.domain.Comment;
 import sk.ness.academy.exception.ResourceNotFoundException;
@@ -11,6 +10,9 @@ public interface CommentService {
 
     /** Returns {@link Comment} with provided ID */
     Comment findById(Integer commentId) throws ResourceNotFoundException, NullPointerException;
+
+    /** Creates new {@link Comment} */
+    void addComment(Integer articleId, Comment comment);
 
     /** Returns {@link Comment} with provided ID */
     void deleteById(Integer commentId) throws ResourceNotFoundException, NullPointerException;

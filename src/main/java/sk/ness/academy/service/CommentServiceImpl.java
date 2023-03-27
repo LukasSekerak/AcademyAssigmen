@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sk.ness.academy.dao.ArticleRepository;
 import sk.ness.academy.dao.CommentRepository;
+import sk.ness.academy.domain.Article;
 import sk.ness.academy.domain.Comment;
 import sk.ness.academy.exception.ResourceNotFoundException;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -28,6 +30,13 @@ public class CommentServiceImpl implements CommentService {
 
         return commentRepository.findById(commentId).orElseThrow(
                 () -> new ResourceNotFoundException("Comment with id: " + Integer.valueOf(commentId) + " doesn't exists."));
+    }
+
+    @Override
+    public void addComment(Integer articleId, Comment comment) {
+        Optional<Article> article = this.articleRepository.findById(articleId);
+        article.get().getComments().add(comment);
+        this.articleRepository.save(article.get());
     }
 
     @Override

@@ -1,18 +1,15 @@
 package sk.ness.academy.service;
 
-import java.util.List;
-
-import javax.transaction.Transactional;
-
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-
 import sk.ness.academy.dao.ArticleRepository;
-import sk.ness.academy.projections.ArticlesWithoutComments;
 import sk.ness.academy.domain.Article;
 import sk.ness.academy.exception.ResourceNotFoundException;
+import sk.ness.academy.projections.ArticlesWithoutComments;
+
+import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
@@ -61,9 +58,7 @@ public class ArticleServiceImpl implements ArticleService {
   public List<Article> searchArticle(String string) { return this.articleRepository.findByTextContainingOrTitleContainingOrAuthorContaining(string, string ,string); }
 
   @Override
-  public void createArticle(final Article article) {
-    this.articleRepository.save(article);
-  }
+  public void createArticle(final Article article) { this.articleRepository.save(article); }
 
   @Override
   public void ingestArticles(final String jsonArticles) {

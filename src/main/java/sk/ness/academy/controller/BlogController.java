@@ -1,28 +1,21 @@
 package sk.ness.academy.controller;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
-import sk.ness.academy.projections.ArticlesWithoutComments;
+import org.springframework.web.bind.annotation.*;
 import sk.ness.academy.domain.Article;
 import sk.ness.academy.domain.Comment;
 import sk.ness.academy.dto.Author;
 import sk.ness.academy.dto.AuthorStats;
+import sk.ness.academy.projections.ArticlesWithoutComments;
 import sk.ness.academy.service.ArticleService;
 import sk.ness.academy.service.AuthorService;
 import sk.ness.academy.service.AuthorStatsService;
 import sk.ness.academy.service.CommentService;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 
 @RestController
@@ -102,9 +95,7 @@ public class BlogController {
   @Transactional
   @RequestMapping(value = "articles/{articleId}/comments", method = RequestMethod.PUT)
   public ResponseEntity<HttpStatus> addComment(@RequestBody final Comment comment, @PathVariable final Integer articleId) {
-    Article article = this.articleService.findById(articleId);
-    article.getComments().add(comment);
-    this.articleService.createArticle(article);
+    this.commentService.addComment(articleId, comment);
     return new ResponseEntity<>(HttpStatus.OK);
   }
 
