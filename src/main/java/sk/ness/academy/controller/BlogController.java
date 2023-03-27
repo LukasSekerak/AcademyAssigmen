@@ -2,7 +2,6 @@ package sk.ness.academy.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import sk.ness.academy.domain.Article;
 import sk.ness.academy.domain.Comment;
@@ -92,7 +91,6 @@ public class BlogController {
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 
-  @Transactional
   @RequestMapping(value = "articles/{articleId}/comments", method = RequestMethod.PUT)
   public ResponseEntity<HttpStatus> addComment(@RequestBody final Comment comment, @PathVariable final Integer articleId) {
     this.commentService.addComment(articleId, comment);
