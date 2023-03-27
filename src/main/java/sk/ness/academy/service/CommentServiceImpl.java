@@ -10,6 +10,7 @@ import sk.ness.academy.exception.ResourceNotFoundException;
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -17,6 +18,9 @@ public class CommentServiceImpl implements CommentService {
 
     @Resource
     private CommentDAO commentDAO;
+
+    @Resource
+    private ArticleDAO articleDAO;
 
     @Override
     public Comment findByID(Integer commentId) throws ResourceNotFoundException, NullPointerException {
@@ -34,7 +38,10 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void createComment(Comment comment) { this.commentDAO.persist(comment); }
+    public void addComment(Integer articleId, Comment comment) {
+        Optional<Article> article = this.articleDAO.findByID(articleId);
+        article.get().getComments().add(comment);
+        this.commentDAO.persist(comment); }
 
     @Override
     public List<Comment> findAllByIDOfArticle(Integer idArticle) { return this.commentDAO.findAllByIDOfArticle(idArticle); }

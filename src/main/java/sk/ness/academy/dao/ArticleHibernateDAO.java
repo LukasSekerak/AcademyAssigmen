@@ -4,11 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.annotation.Resource;
-import javax.persistence.TypedQuery;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
-import org.hibernate.query.Query;
 import org.hibernate.transform.Transformers;
 import org.springframework.stereotype.Repository;
 

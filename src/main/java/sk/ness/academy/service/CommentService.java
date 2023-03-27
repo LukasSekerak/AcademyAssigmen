@@ -15,7 +15,7 @@ public interface CommentService {
     void deleteByID(Integer commentId);
 
     /** Creates new {@link Comment} */
-    void createComment(Comment comment);
+    void addComment(Integer articleId, Comment comment);
 
     /** Returns all available {@link Comment}s of {@link Article} */
     List<Comment> findAllByIDOfArticle(Integer idArticle);

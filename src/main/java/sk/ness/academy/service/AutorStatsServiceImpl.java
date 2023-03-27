@@ -1,9 +1,7 @@
 package sk.ness.academy.service;
 
 import org.springframework.stereotype.Service;
-import sk.ness.academy.dao.AuthorDAO;
 import sk.ness.academy.dao.AuthorStatsDAO;
-import sk.ness.academy.domain.Article;
 import sk.ness.academy.dto.AuthorStats;
 
 import javax.annotation.Resource;

@@ -1,7 +1,5 @@
 package sk.ness.academy.controller;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -78,9 +76,7 @@ public class BlogController {
   @Transactional
   @RequestMapping(value = "articles/{articleId}/comments", method = RequestMethod.PUT)
   public ResponseEntity<HttpStatus> addComment(@RequestBody final Comment comment, @PathVariable final Integer articleId) {
-    Article article = this.articleService.findByID(articleId);
-    article.getComments().add(comment);
-    this.articleService.createArticle(article);
+    this.commentService.addComment(articleId, comment);
     return new ResponseEntity<>(HttpStatus.OK);
   }
 
