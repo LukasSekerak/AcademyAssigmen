@@ -59,7 +59,7 @@ public class CommentServiceImpl implements CommentService {
         }
 
         if (articleRepository.existsById(idArticle)) {
-            return this.commentRepository.findAllByArticleId(idArticle);
+            return this.commentRepository.findAllByArticleId(idArticle).get();
         } else {
             throw new ResourceNotFoundException("Article with id: " + Integer.valueOf(idArticle) + " doesn't exists.");
         }

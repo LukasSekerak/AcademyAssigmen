@@ -1,7 +1,9 @@
 package sk.ness.academy.domain;
 
-import java.util.*;
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "articles")
@@ -30,9 +32,9 @@ public class Article {
   @Temporal(TemporalType.TIMESTAMP)
   private Date createTimestamp;
 
-  @OneToMany(targetEntity=sk.ness.academy.domain.Comment.class, cascade= CascadeType.ALL, fetch = FetchType.EAGER)
+  @OneToMany(targetEntity=sk.ness.academy.domain.Comment.class, cascade= CascadeType.ALL, fetch = FetchType.LAZY)
   @JoinColumn(name="ARTICLE_ID")
-  private Set<Comment> comments = new HashSet<>();
+  private List<Comment> comments = new ArrayList<>();
 
   public Integer getId() {
     return this.id;
@@ -74,11 +76,11 @@ public class Article {
     this.createTimestamp = createTimestamp;
   }
 
-  public Set<Comment> getComments() {
+  public List<Comment> getComments() {
     return comments;
   }
 
-  public void setComments(Set<Comment> comments) {
+  public void setComments(List<Comment> comments) {
     this.comments = comments;
   }
 }

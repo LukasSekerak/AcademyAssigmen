@@ -17,7 +17,7 @@ public interface CommentRepository extends CrudRepository<Comment, Integer> {
     List<Comment> findAll();
 
     @Query(value = "select * from comments where article_id = :id", nativeQuery = true)
-    List<Comment> findAllByArticleId(@Param("id") Integer idArticle);
+    Optional<List<Comment>> findAllByArticleId(@Param("id") Integer idArticle);
 
     void deleteByid(Integer primaryKey);
 
