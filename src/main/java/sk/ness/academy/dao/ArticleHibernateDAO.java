@@ -1,17 +1,15 @@
 package sk.ness.academy.dao;
 
-import java.util.List;
-import java.util.Optional;
-
-import javax.annotation.Resource;
-
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.hibernate.transform.Transformers;
 import org.springframework.stereotype.Repository;
-
 import sk.ness.academy.domain.Article;
 import sk.ness.academy.exception.ResourceNotFoundException;
+
+import javax.annotation.Resource;
+import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class ArticleHibernateDAO implements ArticleDAO {
@@ -29,7 +27,6 @@ public class ArticleHibernateDAO implements ArticleDAO {
       Article article = (Article)this.sessionFactory.getCurrentSession().load(Article.class, articleId);
       this.sessionFactory.getCurrentSession().delete(article);
    }
-
    @Override
   public List<Article> findAll() throws NullPointerException {
     //return this.sessionFactory.getCurrentSession().createSQLQuery("select * from articles").addEntity(Article.class).list();

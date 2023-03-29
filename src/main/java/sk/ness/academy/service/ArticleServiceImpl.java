@@ -3,6 +3,7 @@ package sk.ness.academy.service;
 import com.google.gson.Gson;
 import org.springframework.stereotype.Service;
 import sk.ness.academy.dao.ArticleDAO;
+import sk.ness.academy.dao.CommentDAO;
 import sk.ness.academy.domain.Article;
 import sk.ness.academy.exception.ResourceNotFoundException;
 
@@ -17,14 +18,21 @@ public class ArticleServiceImpl implements ArticleService {
   @Resource
   private ArticleDAO articleDAO;
 
+  @Resource
+  private CommentDAO commnetDAO;
+
   @Override
   public Article findByID(final Integer articleId) throws NullPointerException, ResourceNotFoundException {
     if (articleId == null) {
       throw new NullPointerException("Request param can't be null.");
     }
 
-    return articleDAO.findByID(articleId).orElseThrow(
+    Article a = articleDAO.findByID(articleId).orElseThrow(
             () -> new ResourceNotFoundException("Article with id: " + Integer.valueOf(articleId) + " doesn't exists."));
+
+    a.setComments(commnetDAO.findAllByIDOfArticle(articleId));
+
+    return a;
   }
 
 
@@ -51,7 +59,13 @@ public class ArticleServiceImpl implements ArticleService {
   }
 
   @Override
-  public List<Article> searchArticle(String string) { return this.articleDAO.searchArticle(string); }
+  public List<Article> searchArticle(String string) {
+    List<Article> articles = this.articleDAO.searchArticle(string);
+    for (Article article: articles) {
+      article.setComments(commnetDAO.findAllByIDOfArticle(article.getId()));
+    }
+    return articles;
+  }
 
   @Override
   public void createArticle(final Article article) {
