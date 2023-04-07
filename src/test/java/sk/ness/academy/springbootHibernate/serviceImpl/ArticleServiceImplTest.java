@@ -31,8 +31,8 @@ public class ArticleServiceImplTest {
         final List<Article> articles = articleService.findAll();
 
         Assertions.assertEquals(2, articles.size());
-        Assertions.assertEquals("X_Book_1", articles.get(0).getName());
-        Assertions.assertEquals("X_Book_2", articles.get(1).getName());
+        Assertions.assertEquals("X_Book_1", articles.get(0).getTitle());
+        Assertions.assertEquals("X_Book_2", articles.get(1).getTitle());
     }
 
     @Test
