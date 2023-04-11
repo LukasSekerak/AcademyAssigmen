@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
-@ContextConfiguration(classes = { TestDataSourceConfig.class, ArticleDAO.class, CommentDAO.class })
+@ContextConfiguration(classes = { TestDataSourceConfig.class, AuthorDAO.class })
 @Transactional
 public class AuthorServiceImplTest {
     @Mock
