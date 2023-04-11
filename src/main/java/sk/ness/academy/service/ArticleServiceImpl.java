@@ -5,10 +5,12 @@ import org.springframework.stereotype.Service;
 import sk.ness.academy.dao.ArticleDAO;
 import sk.ness.academy.dao.CommentDAO;
 import sk.ness.academy.domain.Article;
+import sk.ness.academy.domain.Comment;
 import sk.ness.academy.exception.ResourceNotFoundException;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,7 +21,7 @@ public class ArticleServiceImpl implements ArticleService {
   private ArticleDAO articleDAO;
 
   @Resource
-  private CommentDAO commnetDAO;
+  private CommentDAO commentDAO;
 
   @Override
   public Article findByID(final Integer articleId) throws NullPointerException, ResourceNotFoundException {
@@ -30,7 +32,12 @@ public class ArticleServiceImpl implements ArticleService {
     Article a = articleDAO.findByID(articleId).orElseThrow(
             () -> new ResourceNotFoundException("Article with id: " + Integer.valueOf(articleId) + " doesn't exists."));
 
-    a.setComments(commnetDAO.findAllByIDOfArticle(articleId));
+    List<Comment> listOfComments = new ArrayList<Comment>();
+
+    if (!commentDAO.findAllByIDOfArticle(articleId).isEmpty())
+      listOfComments = commentDAO.findAllByIDOfArticle(articleId);
+
+    a.setComments(listOfComments);
 
     return a;
   }
@@ -62,7 +69,7 @@ public class ArticleServiceImpl implements ArticleService {
   public List<Article> searchArticle(String string) {
     List<Article> articles = this.articleDAO.searchArticle(string);
     for (Article article: articles) {
-      article.setComments(commnetDAO.findAllByIDOfArticle(article.getId()));
+      article.setComments(commentDAO.findAllByIDOfArticle(article.getId()));
     }
     return articles;
   }

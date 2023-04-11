@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import sk.ness.academy.dao.AuthorDAO;
+import sk.ness.academy.domain.Article;
 import sk.ness.academy.dto.Author;
 
 @Service
@@ -19,7 +20,13 @@ public class AuthorServiceImpl implements AuthorService {
 
   @Override
   public List<Author> findAll() {
-    return this.authorDAO.findAll();
+
+    final List<Author> listOfAuthors = this.authorDAO.findAll();
+
+    if (listOfAuthors == null) {
+      throw new NullPointerException("No authors in database.");
+    }
+    return listOfAuthors;
   }
 
 }

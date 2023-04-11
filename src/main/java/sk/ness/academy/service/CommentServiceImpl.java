@@ -34,6 +34,13 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void deleteByID(Integer commentId) {
+        if (commentId == null) {
+            throw new NullPointerException("Request param can't be null.");
+        }
+
+        Comment comment = commentDAO.findByID(commentId).orElseThrow(
+                () -> new ResourceNotFoundException("Comment with id: " + Integer.valueOf(commentId) + " doesn't exists."));
+
         this.commentDAO.deleteByID(commentId);
     }
 
@@ -44,10 +51,16 @@ public class CommentServiceImpl implements CommentService {
         this.commentDAO.persist(comment); }
 
     @Override
-    public List<Comment> findAllByIDOfArticle(Integer idArticle) { return this.commentDAO.findAllByIDOfArticle(idArticle); }
+    public List<Comment> findAllByIDOfArticle(Integer idArticle) {
+        if (idArticle == null) {
+            throw new NullPointerException("Request param can't be null.");
+        }
 
-    @Override
-    public void ingestArticles(final String jsonComments) {
-        throw new UnsupportedOperationException("Article ingesting not implemented.");
+        articleDAO.findByID(idArticle).orElseThrow(
+                () -> new ResourceNotFoundException("Article with id: " + Integer.valueOf(idArticle) + " doesn't exists."));
+
+        return this.commentDAO.findAllByIDOfArticle(idArticle);
+
     }
+
 }

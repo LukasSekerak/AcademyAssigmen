@@ -20,7 +20,4 @@ public interface CommentService {
     /** Returns all available {@link Comment}s of {@link Article} */
     List<Comment> findAllByIDOfArticle(Integer idArticle);
 
-    /** Creates new {@link Comment}s by ingesting all articles from json */
-    void ingestArticles(String jsonComments);
-
 }
