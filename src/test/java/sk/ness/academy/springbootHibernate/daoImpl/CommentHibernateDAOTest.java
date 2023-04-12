@@ -43,14 +43,14 @@ public class CommentHibernateDAOTest {
     @Test
     void findByIDTestNull() {
         final Optional<Comment> comment = commentHibernateDAO.findByID(4);
-        Assertions.assertTrue(!comment.isPresent());
+        Assertions.assertFalse(comment.isPresent());
     }
 
     @Test
     void deleteByIDTest() {
         commentHibernateDAO.deleteByID(1);
         final  Optional<Comment> comment = commentHibernateDAO.findByID(1);
-        Assertions.assertTrue(!comment.isPresent());
+        Assertions.assertFalse(comment.isPresent());
     }
 
     @Test

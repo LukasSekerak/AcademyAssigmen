@@ -59,14 +59,14 @@ public class AuthorServiceImplTest {
         Mockito.when(authorDAO.findAll()).thenReturn(null);
 
         NullPointerException thrown = Assertions.assertThrows(NullPointerException.class, () -> {
-            final List<Author> authors = authorService.findAll();
+            authorService.findAll();
         }, "No authors in database.");
 
         Assertions.assertEquals("No authors in database.", thrown.getMessage());
     }
 
     @BeforeEach
-    private void init() {
+    public void init() {
         final Author author1 = new Author();
         author1.setName("Author_1");
 

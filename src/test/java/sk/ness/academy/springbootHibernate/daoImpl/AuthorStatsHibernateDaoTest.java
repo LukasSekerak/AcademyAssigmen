@@ -7,8 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import sk.ness.academy.config.TestDataSourceConfig;
-import sk.ness.academy.dao.ArticleHibernateDAO;
-import sk.ness.academy.dao.AuthorHibernateDAO;
 import sk.ness.academy.dao.AuthorStatsHibernateDAO;
 import sk.ness.academy.dto.AuthorStats;
 

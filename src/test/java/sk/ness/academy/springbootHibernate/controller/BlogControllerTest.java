@@ -28,14 +28,12 @@ import sk.ness.academy.exception.ResourceNotFoundException;
 import sk.ness.academy.service.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @WebMvcTest(BlogController.class)
 @ContextConfiguration(classes = { TestDataSourceConfig.class })

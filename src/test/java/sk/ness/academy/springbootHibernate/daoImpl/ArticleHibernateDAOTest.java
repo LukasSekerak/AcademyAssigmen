@@ -55,14 +55,14 @@ public class ArticleHibernateDAOTest {
     @Test
     void findByIDTestNull() {
         final Optional<Article> article = articleHibernateDAO.findByID(4);
-        Assertions.assertTrue(!article.isPresent());
+        Assertions.assertFalse(article.isPresent());
     }
 
     @Test
     void deleteByIDTest() {
         articleHibernateDAO.deleteByID(1);
         final Optional<Article> article = articleHibernateDAO.findByID(1);
-        Assertions.assertTrue(!article.isPresent());
+        Assertions.assertTrue(article.isEmpty());
     }
 
     @Test

@@ -125,7 +125,7 @@ public class CommentServiceImplTest {
         article1.setId(1);
 
         Mockito.when(articleDAO.findByID(1)).thenReturn(Optional.of(article1));
-        Mockito.when(commentDAO.findAllByIDOfArticle(1)).thenReturn(new ArrayList<Comment>());
+        Mockito.when(commentDAO.findAllByIDOfArticle(1)).thenReturn(new ArrayList<>());
 
         final List<Comment> comments = commentService.findAllByIDOfArticle(1);
 

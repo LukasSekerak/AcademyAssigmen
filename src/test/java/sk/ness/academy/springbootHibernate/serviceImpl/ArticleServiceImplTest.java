@@ -162,7 +162,7 @@ public class ArticleServiceImplTest {
 
 
     @BeforeEach
-    private void init() {
+    public void init() {
         final Comment comment1 = new Comment();
         comment1.setText("Comment_1");
         comment1.setId(1);

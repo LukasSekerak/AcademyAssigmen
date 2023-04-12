@@ -67,7 +67,7 @@ public class AuthorStatsServiceImplTest {
     }
 
     @BeforeEach
-    private void init() {
+    public void init() {
         final AuthorStats as1 = new AuthorStats();
         as1.setAuthorName("Author_1");
         as1.setArticleCount(2);

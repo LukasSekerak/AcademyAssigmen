@@ -9,7 +9,6 @@ import org.springframework.test.context.jdbc.Sql;
 import sk.ness.academy.config.TestDataSourceConfig;
 import sk.ness.academy.dao.ArticleHibernateDAO;
 import sk.ness.academy.dao.AuthorHibernateDAO;
-import sk.ness.academy.domain.Article;
 import sk.ness.academy.dto.Author;
 
 import javax.transaction.Transactional;
