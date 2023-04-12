@@ -1,5 +1,6 @@
 package sk.ness.academy.springbootHibernate.serviceImpl;
 
+import com.google.gson.Gson;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,6 +23,8 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static org.mockito.Mockito.doNothing;
 
 @SpringBootTest
 @ContextConfiguration(classes = { TestDataSourceConfig.class, ArticleDAO.class, CommentDAO.class })
@@ -146,6 +149,26 @@ public class ArticleServiceImplTest {
         articleService.createArticle(article);
 
         Mockito.verify(articleDAO, Mockito.times(1)).persist(article);
+    }
+
+    @Test
+    void ingestArticlesTest() {
+        Gson gson = new Gson();
+
+        final Article article = new Article();
+        article.setTitle("5 Tips");
+        article.setAuthor("Matt Lacey");
+        article.setText("After listening to a recent.");
+        article.setId(5);
+
+        String json = "[{\n" +
+                "      \"title\":\"5 Tips\",\n" +
+                "      \"text\":\"After listening to a recent.\",\n" +
+                "      \"author\":\"Matt Lacey\"\n" +
+                "   }]";
+
+        articleService.ingestArticles(json);
+        doNothing().when(articleDAO).persist(article);
     }
 
     @Test
